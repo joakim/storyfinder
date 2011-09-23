@@ -107,7 +107,7 @@ var SF = (function ($, _) {
           $('#' + this.id).fancybox();
         });
       });
-
+      
     });
   }
 
