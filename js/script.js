@@ -10,8 +10,8 @@ var SF = (function ($, _) {
       '</div>' +
       '<div class="date"><%= date %></div>' +
       '<div class="actions">' +
-      '<span class="create"><a id="add_story_<%= id %>" href="#data_add_story_<%= id %>" class="add_story_action">Create</a>' +
-      '<div style="display:none"><div id="data_add_story_<%= id %>" style="width:400px;">' +
+      '<span class="create"><a id="create_story_<%= id %>" href="#data_create_story_<%= id %>" class="create_story_action">Create</a>' +
+      '<div style="display:none"><div id="data_create_story_<%= id %>" style="width:400px;">' +
       '<h1>Create Story</h1>' +
       '<h3> Do you want to create a story based on the selected tweet?</h3>' +
       '<div>Date: <%= date %></div>'+
@@ -29,7 +29,28 @@ var SF = (function ($, _) {
       '</div>' +
       '</div>' +
       '</span>' +
-      '<span class="add"><input type="button" value="Add to Story" /></span>' +
+      '<span class="add"><a id="add_story_<%= id %>" href="#data_add_story_<%= id %>" class="add_story_action">Add</a>' +
+      '<div style="display:none"><div id="data_add_story_<%= id %>" style="width:400px;">' +
+      '<h1>Add tweet to...</h1>' +
+      '<h3> Where do you want to the tweet?</h3>' +
+      '<div>Date: <%= date %></div>'+
+      '<div><img src="<%= image %>" /><span style="font-weight: bold">  <%= user %></span></div>'+
+      '<div>Tweet: <%= text %></div>'+
+      '<div>' +
+      '<br />' +
+      '<br />' +
+      '<h3>Story Name</h3>' +
+      '<select id="stories" >' +
+      '<option value="1">Gaddafi Story</option>' +
+      '<option value="2">Another story</option>' +
+      '</select>' +
+      '<div>' +
+      '<span><input type="button" value="Add""></span><span><input type="button" value="Cancel"></span>' +
+      '</div>' +
+      '</div>'+
+      '</div>' +
+      '</div>' +
+      '</span>' +
       '</div>' +
       '</summary>' +
       '</article>');
@@ -69,6 +90,9 @@ $(function() {
     $('.view.discovery').show();
     ids.forEach(function(value, index){
           $("#add_story_"+value).bind('click', function(){
+              $("#"+this.id).fancybox();
+          });
+          $("#create_story_"+value).bind('click', function(){
               $("#"+this.id).fancybox();
           });
       });
