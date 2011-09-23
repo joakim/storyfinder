@@ -11,10 +11,11 @@ var SF = (function ($, _) {
   tpl.tweetWrapper = _.template('' +
     '<article class="tweet" data:id="<%= id %>">' +
     '<%= tweet %>' +
-    '<div class="actions">' +
-    '<span class="button button-add"><a href="#data_add_story_<%= id %>" class="add_story_action" data:popup="add">Add</a></span>' +
-    '<span class="button button-create"><a href="#data_create_story_<%= id %>" class="create_story_action" data:popup="create">Create</a></span>' +
+    '<div class="actions" style="float:right">' +
+    '<span class="button primary icon add button-add"><a href="#data_add_story_<%= id %>" class="add_story_action" data:popup="add">Add</a></span>' +
+    '<span class="button icon edit button-create"><a href="#data_create_story_<%= id %>" class="create_story_action" data:popup="create">Create</a></span>' +
     '</div>' +
+    '<div style="clear:both"></div>' +
     '<%= popups %>' +
     '</article>');
 
@@ -40,7 +41,7 @@ var SF = (function ($, _) {
     '<option value="2">Another story</option>' +
     '</select>' +
     '<div>' +
-    '<span><input type="button" value="Add""></span><span><input type="button" value="Cancel"></span>' +
+    '<span class="button primary icon add"><a href="#">Add</a></span><span class="button icon remove"><a href="#">Cancel</a></span>' +
     '</div>' +
     '</div>' +
     '</div>');
@@ -56,7 +57,7 @@ var SF = (function ($, _) {
     '<h3>Story Name</h3>' +
     '<input id="storyName" type="text" placeholder="Add the name of the story" />' +
     '<div>' +
-    '<span><input type="button" value="Create"></span><span><input type="button" value="Cancel"></span>' +
+    '<span class="button primary icon edit"><a href="#">Create</a></span><span class="button icon remove"><a href="#">Cancel</a></span>' +
     '</div>' +
     '</div>' +
     '</div>');
