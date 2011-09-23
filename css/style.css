@@ -63,10 +63,30 @@ body > nav li a {
 
 .view {
   margin-left: 200px;
-  height: 100%;
-  border-left: 1px solid #E8E8E8;
 }
 
+.view header h1 {
+  padding: 10px;
+  background-color: #2C2C2C;
+  color: #FFFFFF;
+  font-weight: normal;
+  font-size: 22px;
+  border-bottom: 1px solid #E8E8E8;
+}
+
+.view .tweets {
+  position: absolute;
+  margin-right: 220px;
+  border-left: 1px solid #E8E8E8;
+  border-right: 1px solid #E8E8E8;
+}
+
+.view .filters {
+  position: absolute;
+  padding: 10px;
+  right: 0;
+  width: 200px;
+}
 
 /**
  * Discovery.
@@ -114,6 +134,10 @@ body > nav li a {
 /**
  * Map.
  */
+
+.map {
+  margin-bottom: -4px;
+}
 
 .map iframe {
   width: 100%;
