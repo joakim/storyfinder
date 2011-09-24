@@ -24,13 +24,12 @@ body > header h1 {
  * Navigation.
  */
 
-nav.stories {
+body > nav {
   float: left;
-  width: 30%;
-  height: 100%;
+  width: 200px;
 }
 
-nav.stories h1 {
+body > nav h1 {
   font-size: 18px;
   font-weight: bold;
   line-height: 30px;
@@ -40,21 +39,32 @@ nav.stories h1 {
   border-bottom: 1px solid #E8E8E8;
 }
 
-nav.stories ul {
+body > nav ul {
   background-color: #F8F8F8;
 }
 
-nav.stories li {
+body > nav li {
   border-bottom: 1px solid #F4F4F4;
 }
 
-nav.stories li a {
+body > nav li a {
   display: block;
   padding: 5px 5px 4px 20px;
   border-bottom: 1px solid #E8E8E8;
   color: #666;
   overflow: hidden;
   white-space: nowrap;
+}
+
+
+/**
+ * Views.
+ */
+
+.view {
+  margin-left: 200px;
+  height: 100%;
+  border-left: 1px solid #E8E8E8;
 }
 
 
@@ -70,13 +80,6 @@ nav.stories li a {
 /**
  * Story.
  */
-
-.view.story {
-  float: right;
-  width: 70%;
-  height: 100%;
-  border-left: 1px solid #E8E8E8;
-}
 
 .view.story h1 {
   padding: 10px 10px 5px;
