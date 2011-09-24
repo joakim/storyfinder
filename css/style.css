@@ -51,7 +51,7 @@ body > nav li a {
   display: block;
   padding: 5px 5px 4px 20px;
   border-bottom: 1px solid #E8E8E8;
-  color: #666;
+  color: #666 !important;
   overflow: hidden;
   white-space: nowrap;
 }
@@ -66,12 +66,11 @@ body > nav li a {
 }
 
 .view header h1 {
-  padding: 10px;
-  background-color: #2C2C2C;
-  color: #FFFFFF;
+  padding: 10px 10px 7px;
   font-weight: normal;
-  font-size: 22px;
+  font-size: 18px;
   border-bottom: 1px solid #E8E8E8;
+  border-left: 1px solid #E8E8E8;
 }
 
 .view .tweets {
@@ -101,24 +100,31 @@ body > nav li a {
  * Story.
  */
 
-.view.story h1 {
-  padding: 10px 10px 5px;
-  border-bottom: 1px solid #E8E8E8;
+header.story-header {
+  border-bottom: 1px solid #888888;
 }
 
 .view.story .tabs {
-  height: 25px;
-  background-color: #2C2C2C;
+  height: 27px;
   color: #FFFFFF;
+  background-color: #E8E8E8;
 }
 
 .view.story .tabs ul {
-  margin-left: 10px;
+  font-size: 14px;
 }
 
 .view.story .tabs li {
   float: left;
-  padding: 5px 10px 0 0;
+}
+
+.view.story .tabs li a {
+  display: block;
+  padding: 5px 10px;
+  background-color: #2C2C2C;
+  border-right: 1px solid #E8E8E8;
+  color: #FFFFFF;
+  font-weight: normal;
 }
 
 .view.story .tabs li a {
@@ -136,7 +142,9 @@ body > nav li a {
  */
 
 .map {
+  height: 300px;
   margin-bottom: -4px;
+  background-color: #E8E8E8;
 }
 
 .map iframe {
@@ -158,4 +166,8 @@ body > nav li a {
 .tweets article img {
   float: left;
   margin-right: 10px;
+}
+
+.tweets article .details {
+  font-size: 11px;
 }
