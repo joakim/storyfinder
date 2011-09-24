@@ -1,22 +1,131 @@
+/**
+ * HTML elements.
+ */
+
+a {
+  font-weight: bold;
+  color: #222222;
+  text-decoration: none;
+}
+
+h1 {
+  margin: 0;
+}
+
+body > header h1 {
+  padding: 10px;
+  background-color: #2C2C2C;
+  color: #FFFFFF;
+  font-weight: normal;
+}
+
+
+/**
+ * Navigation.
+ */
+
 nav.stories {
   float: left;
   width: 30%;
+  height: 100%;
 }
 
-.main {
+nav.stories h1 {
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 30px;
+  padding: 4px 20px;
+  background-color: #F8F8F8;
+  border-top: 1px solid #FFFFFF;
+  border-bottom: 1px solid #E8E8E8;
+}
+
+nav.stories ul {
+  background-color: #F8F8F8;
+}
+
+nav.stories li {
+  border-bottom: 1px solid #F4F4F4;
+}
+
+nav.stories li a {
+  display: block;
+  padding: 5px 5px 4px 20px;
+  border-bottom: 1px solid #E8E8E8;
+  color: #666;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+
+/**
+ * Discovery.
+ */
+
+.view.discovery .trends h3 {
+  padding: 6px 10px;
+}
+
+
+/**
+ * Story.
+ */
+
+.view.story {
   float: right;
   width: 70%;
+  height: 100%;
+  border-left: 1px solid #E8E8E8;
 }
 
-.main section.view,
-.main section.view section.view-tab {
+.view.story h1 {
+  padding: 10px 10px 5px;
+  border-bottom: 1px solid #E8E8E8;
+}
+
+.view.story .tabs {
+  height: 25px;
+  background-color: #2C2C2C;
+  color: #FFFFFF;
+}
+
+.view.story .tabs ul {
+  margin-left: 10px;
+}
+
+.view.story .tabs li {
+  float: left;
+  padding: 5px 10px 0 0;
+}
+
+.view.story .tabs li a {
+  color: #FFFFFF;
+  font-weight: normal;
+}
+
+.view.story .view-tab {
   display: none;
 }
+
+
+/**
+ * Map.
+ */
 
 .map iframe {
   width: 100%;
   height: 300px;
   border: none;
+}
+
+
+/**
+ * Tweets.
+ */
+
+.tweets article {
+  padding: 10px;
+  border-bottom: 1px solid #E8E8E8;
 }
 
 .tweets article img {
