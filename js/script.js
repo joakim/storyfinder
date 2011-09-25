@@ -8,22 +8,34 @@ var SF = (function ($, _) {
     return tpl[template](variables);
   };
 
+  my.displayTweets = function($element) {
+    $.getJSON('data/' + $element.attr('data:set') + '.json', function(data) {
+      output = '';
+      _.each(data[0], function(element, index) {
+        output += SF.theme('tweet', {
+          image: element.profile_image_url,
+          text: element.text,
+          user: element.from_user,
+          date: element.created_at,
+        });
+      });
+
+      $('.view.discovery .tweets').empty().append(output);
+      $('.topic-header h1').text($element.text());
+    });
+  }
+
   return my; 
 }(jQuery, _));
 
 // Called on page load.
 $(function() {
-  $.getJSON('troydevis.json', function(data) {
-    output = '';
-    _.each(data[0], function(element, index) {
-      output += SF.theme('tweet', {
-        image: element.profile_image_url,
-        text: element.text,
-        user: element.from_user,
-        date: element.created_at,
-      });
-    });
-    $('.view.discovery .tweets').append(output);
-    $('.view.discovery').show();
+  // Open the topmost topic.
+  SF.displayTweets($('nav.topics ul a:first'));
+
+  // Open a topic when selected in the sidebar.
+  $('.topics ul a').bind('click', function() {
+    SF.displayTweets($(this));
+    return false;
   });
 });

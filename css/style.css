@@ -121,15 +121,15 @@ header.story-header {
 .view.story .tabs li a {
   display: block;
   padding: 5px 10px;
-  background-color: #2C2C2C;
   border-right: 1px solid #E8E8E8;
+  background-color: #2C2C2C;
   color: #FFFFFF;
   font-weight: normal;
 }
 
-.view.story .tabs li a {
-  color: #FFFFFF;
-  font-weight: normal;
+.view.story .tabs li.active a {
+  background-color: #FFFFFF;
+  color: #2C2C2C;
 }
 
 .view.story .view-tab {
