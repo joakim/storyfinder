@@ -107,7 +107,8 @@ header.story-header {
 .view.story .tabs {
   height: 27px;
   color: #FFFFFF;
-  background-color: #E8E8E8;
+  background-color: #888888;
+  border-left: 1px solid #E8E8E8;
 }
 
 .view.story .tabs ul {
@@ -121,19 +122,14 @@ header.story-header {
 .view.story .tabs li a {
   display: block;
   padding: 5px 10px;
-  border-right: 1px solid #E8E8E8;
-  background-color: #2C2C2C;
-  color: #FFFFFF;
+  border-right: 1px solid #CCCCCC;
+  color: #EEEEEE;
   font-weight: normal;
 }
 
 .view.story .tabs li.active a {
   background-color: #FFFFFF;
   color: #2C2C2C;
-}
-
-.view.story .view-tab {
-  display: none;
 }
 
 
@@ -144,7 +140,7 @@ header.story-header {
 .map {
   height: 300px;
   margin-bottom: -4px;
-  background-color: #E8E8E8;
+  background-color: #B3B3B3;
 }
 
 .map iframe {
@@ -159,8 +155,12 @@ header.story-header {
  */
 
 .tweets article {
-  padding: 10px;
+  padding: 15px 10px 10px;
   border-bottom: 1px solid #E8E8E8;
+}
+
+.tweets article:hover {
+  background-color: #F8F8F8;
 }
 
 .tweets article img {
