@@ -24,12 +24,12 @@ body > header h1 {
  * Navigation.
  */
 
-body > nav {
+nav.topics {
   float: left;
   width: 200px;
 }
 
-body > nav h1 {
+nav.topics h1 {
   font-size: 18px;
   font-weight: bold;
   line-height: 30px;
@@ -39,15 +39,15 @@ body > nav h1 {
   border-bottom: 1px solid #E8E8E8;
 }
 
-body > nav ul {
+nav.topics ul {
   background-color: #F8F8F8;
 }
 
-body > nav li {
+nav.topics li {
   border-bottom: 1px solid #F4F4F4;
 }
 
-body > nav li a {
+nav.topics li a {
   display: block;
   padding: 5px 5px 4px 20px;
   border-bottom: 1px solid #E8E8E8;
@@ -73,19 +73,6 @@ body > nav li a {
   border-left: 1px solid #E8E8E8;
 }
 
-.view .tweets {
-  position: absolute;
-  margin-right: 220px;
-  border-left: 1px solid #E8E8E8;
-  border-right: 1px solid #E8E8E8;
-}
-
-.view .filters {
-  position: absolute;
-  padding: 10px;
-  right: 0;
-  width: 200px;
-}
 
 /**
  * Discovery.
@@ -104,32 +91,8 @@ header.story-header {
   border-bottom: 1px solid #888888;
 }
 
-.view.story .tabs {
-  height: 27px;
-  color: #FFFFFF;
-  background-color: #888888;
-  border-left: 1px solid #E8E8E8;
-}
-
-.view.story .tabs ul {
-  font-size: 14px;
-}
-
-.view.story .tabs li {
-  float: left;
-}
-
-.view.story .tabs li a {
-  display: block;
-  padding: 5px 10px;
-  border-right: 1px solid #CCCCCC;
-  color: #EEEEEE;
-  font-weight: normal;
-}
-
-.view.story .tabs li.active a {
-  background-color: #FFFFFF;
-  color: #2C2C2C;
+.view.story .view-tab.clipboard {
+  display: none;
 }
 
 
@@ -151,8 +114,53 @@ header.story-header {
 
 
 /**
+ * Aspects.
+ */
+
+.aspects {
+  height: 35px;
+}
+
+.aspects h1 {
+  display: none;
+}
+
+.aspects ul {
+  padding-left: 0;
+  margin-left: 0;
+  background-color: #2C2C2C;
+  color: #FFFFFF;
+  float: left;
+  width: 100%;
+}
+
+.aspects li {
+  display: inline;
+}
+
+.aspects li a {
+  padding: 0 20px;
+  background-color: #2C2C2C;
+  color: #FFFFFF;
+  text-decoration: none;
+  float: left;
+  border-right: 1px solid #FFFFFF;
+  line-height: 35px;
+  font-size: 16px;
+  font-weight: normal;
+}
+
+
+/**
  * Tweets.
  */
+
+.tweets {
+  position: absolute;
+  margin-right: 220px;
+  border-left: 1px solid #E8E8E8;
+  border-right: 1px solid #E8E8E8;
+}
 
 .tweets article {
   padding: 15px 10px 10px;
@@ -176,6 +184,13 @@ header.story-header {
 /**
  * Filters.
  */
+
+.filters {
+  position: absolute;
+  padding: 10px;
+  right: 0;
+  width: 200px;
+}
 
 .filters label {
   display: block;
@@ -265,3 +280,14 @@ header.story-header {
 .popup {
   display: none;
 }
+
+
+/**
+ * Timeline.
+ */
+
+.tlcontainer{padding:15px;}
+.tlcontentwrapper{background:#eeeeee;}
+.tltime{float:left;padding:0 15px 0 0}
+.tlitem{float:left;padding:15px;background:#ffffff;}
+.tlarrow{float:left;padding:21px 0 0 0;}
