@@ -1,10 +1,7 @@
 var SF = (function ($, _) {
   var my = {}, that = this;
 
-  my.originalTopic = null;
-
-  var rand_no = Math.random();
-  var seed = 1000000000000;
+  my.topicsElement = null;
 
   var tpl = {};
 
@@ -65,8 +62,8 @@ var SF = (function ($, _) {
     return tpl[template](variables);
   };
 
-  my.displayTweets = function($element) {
-    $.getJSON('data/' + $element.attr('data:set') + '.json', function(data) {
+  my.displayTweets = function(dataset, topic) {
+    $.getJSON('data/' + dataset + '.json', function(data) {
       output = '';
       var ids = [];
 
@@ -99,6 +96,10 @@ var SF = (function ($, _) {
       $('.tweets').fadeTo(600, 0.3, function() {
         $(this).empty().append(output).fadeTo(0, 1).show();
 
+        if (topic) {
+          $('header.topic-header h1').text(topic);
+        }
+
         $('.tweets article').each(function() {
           var article = this;
 
@@ -112,15 +113,21 @@ var SF = (function ($, _) {
 
           // $(this).draggable({ revert: 'invalid' });
         });
-
-        if (my.originalTopic !== null) {
-          $('header.topic-header h1').text(my.originalTopic + ' › ' + $element.text());
-        }
-        else {
-          $('header.topic-header h1').text($element.text());
-        }
-
       });
+    });
+  }
+
+  my.setFilter = function(filter) {
+    $('.tweets').fadeTo(200, 0.3, function() {
+      var tweets = this;
+      setTimeout(function() {
+        $(tweets).fadeTo(0, 1).find('article').shuffle().show();
+
+        if ($(filter).is('.proximity-element')) {
+          var num = 100 - ($(filter).slider('value') / 10000) * 100;
+          $('article', tweets).slice(0, num).hide();
+        }
+      }, 400);
     });
   }
 
@@ -134,11 +141,18 @@ var SF = (function ($, _) {
 // Called on page load.
 $(function() {
   // Open the topmost topic.
-  SF.displayTweets($('nav.topics ul a:first'));
+  if ($('body').is('.view-discovery')) {
+    SF.topicsElement = $('nav.topics');
+  }
+  else {
+    SF.topicsElement = $('nav.aspects');
+  }
+
+  SF.displayTweets($('ul a:first', SF.topicsElement).attr('data:set'), $('ul a:first', SF.topicsElement).text());
 
   // Open a topic when selected in the sidebar.
-  $('.topics ul a').bind('click', function() {
-    SF.displayTweets($(this));
+  $('ul a', SF.topicsElement).bind('click', function() {
+    SF.displayTweets($(this).attr('data:set'), $(this).text());
     return false;
   });
 
@@ -146,11 +160,6 @@ $(function() {
     $(this).fancybox();
     return false;
   });
-
-  // Store original topic for reference.
-  if ($('body').is('.view-story')) {
-    SF.originalTopic = $('header.topic-header h1').text();
-  }
 
   /**
    * Filters.
@@ -194,18 +203,18 @@ $(function() {
 			$('.filters .proximity-value').text((ui.value / 10) + ' km');
 		}
 	});
-  $('.filters .ui-slider, .filters .chzn-results li, .filters .keywords-button').bind('mouseup', function() {
-    var that = this;
-
-    $('.tweets').fadeTo(600, 0.3, function() {
-      $(this).fadeTo(0, 1).find('article').shuffle().show();
-
-      if ($(that).is('.proximity-element')) {
-        var num = 100 - ($(that).slider('value') / 10000) * 100;
-        $('.tweets article').slice(0, num).hide();
-      }
-    });
+  $('.filters .ui-slider, .filters .chzn-results li').bind('mouseup', function() {
+    SF.setFilter(this);
   });
+  $('.filters .keywords-button').bind('click', function() {
+    var tags = $('.filters .keywords-element ul').tagit('tags');
+    if (_.include(tags, 'saleh')) {
+      SF.displayTweets('yemen/SalehOrSalehHashTag');
+    }
+    SF.setFilter(this);
+    return false;
+  });
+
 
   //   $('.dropzone').droppable({
   //  accept: '.tweets article',
@@ -220,4 +229,7 @@ $(function() {
   //    $(ui.draggable).remove();
   //  }
   // });
+
+  // Better looking scroll bars – not working.
+  // $('.tweets').lionbars('dark', true, true, true);
 });
