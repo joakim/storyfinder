@@ -8,45 +8,29 @@ var SF = (function ($, _) {
 
   var tpl = {};
 
+  tpl.tweetWrapper = _.template('' +
+    '<article class="tweet" data:id="<%= id %>">' +
+    '<%= tweet %>' +
+    '<%= popups %>' +
+    '</article>');
+
   tpl.tweet = _.template('' +
-    '<article><img src="<%= image %>"/>' +
+    '<img src="<%= image %>"/>' +
     '<div class="text"><%= text %></div>' +
     '<summary><div class="user"><%= user %>' +
     '</div>' +
     '<div class="date"><%= date %></div>' +
     '<div class="actions">' +
-    '<span class="create"><a id="create_story_<%= id %>" href="#data_create_story_<%= id %>" class="create_story_action">Create</a></span>' +
-    '<span class="add"><a id="add_story_<%= id %>" href="#data_add_story_<%= id %>" class="add_story_action">Add</a></span>' +
+    '<span class="button button-add"><a href="#data_add_story_<%= id %>" class="add_story_action" data:popup="add">Add</a></span>' +
+    '<span class="button button-create"><a href="#data_create_story_<%= id %>" class="create_story_action" data:popup="create">Create</a></span>' +
     '</div>' +
-    '</summary>' +
-    '</article>');
-
-  tpl.popupCreate = _.template('' +
-    '<div class="popup"><div id="data_create_story_<%= id %>" style="width:400px;">' +
-    '<h1>Create Story</h1>' +
-    '<h3> Do you want to create a story based on the selected tweet?</h3>' +
-    '<div>Date: <%= date %></div>' +
-    '<div><img src="<%= image %>" /><span style="font-weight: bold">  <%= user %></span></div>' +
-    '<div>Tweet: <%= text %></div>' +
-    '<div>' +
-    '<br />' +
-    '<br />' +
-    '<h3>Story Name</h3>' +
-    '<input id="storyName" type="text" placeholder="Add the name of the story" />' +
-    '<div>' +
-    '<span><input type="button" value="Create"></span><span><input type="button" value="Cancel"></span>' +
-    '</div>' +
-    '</div>' +
-    '</div>' +
-    '</div>');
+    '</summary>');
 
   tpl.popupAdd = _.template('' +
-    '<div class="popup"><div id="data_add_story_<%= id %>" style="width:400px;">' +
+    '<div class="popup popup-add">' +
     '<h1>Add tweet to...</h1>' +
     '<h3> Where do you want to the tweet?</h3>' +
-    '<div>Date: <%= date %></div>' +
-    '<div><img src="<%= image %>" /><span style="font-weight: bold">  <%= user %></span></div>' +
-    '<div>Tweet: <%= text %></div>' +
+    '<%= tweet %>' +
     '<div>' +
     '<br />' +
     '<br />' +
@@ -59,6 +43,21 @@ var SF = (function ($, _) {
     '<span><input type="button" value="Add""></span><span><input type="button" value="Cancel"></span>' +
     '</div>' +
     '</div>' +
+    '</div>');
+
+  tpl.popupCreate = _.template('' +
+    '<div class="popup popup-create">' +
+    '<h1>Create Story</h1>' +
+    '<h3> Do you want to create a story based on the selected tweet?</h3>' +
+    '<%= tweet %>' +
+    '<div>' +
+    '<br />' +
+    '<br />' +
+    '<h3>Story Name</h3>' +
+    '<input id="storyName" type="text" placeholder="Add the name of the story" />' +
+    '<div>' +
+    '<span><input type="button" value="Create"></span><span><input type="button" value="Cancel"></span>' +
+    '</div>' +
     '</div>' +
     '</div>');
 
@@ -67,47 +66,60 @@ var SF = (function ($, _) {
   };
 
   my.displayTweets = function($element) {
-    var ids = [];
     $.getJSON('data/' + $element.attr('data:set') + '.json', function(data) {
       output = '';
+      var ids = [];
 
       _.each(data[0], function(element, index) {
         var id = SF.createID('data_' + element.from_user, index);
         ids.push(id);
 
-        output += SF.theme('tweet', {
+        var options = {
           image: element.profile_image_url,
           text: element.text,
           user: element.from_user,
           date: element.created_at,
           id: id
-        });
+        }
+
+        var tweetMarkup = SF.theme('tweet', options);
+
+        var popupOptions = { tweet: tweetMarkup };
+
+        var listingOptions = {
+          id: id,
+          tweet: tweetMarkup,
+          popups: SF.theme('popupAdd', popupOptions) + SF.theme('popupCreate', popupOptions)
+        };
+
+        output += SF.theme('tweetWrapper', listingOptions);
       });
 
+      // Fade out existing tweets before showing new ones.
       $('.tweets').fadeTo(600, 0.3, function() {
         $(this).empty().append(output).fadeTo(0, 1).show();
-      });
 
-      $('.tweets article').draggable({
-        revert: 'invalid'
-      });
+        $('.tweets article').each(function() {
+          var article = this;
 
-      if (my.originalTopic !== null) {
-        $('header.topic-header h1').text(my.originalTopic + ' › ' + $element.text());
-      }
-      else {
-        $('header.topic-header h1').text($element.text());
-      }
+          $('.button a', this).bind('click', function() {
+            var popup = $(this).attr('data:popup');
+            $.fancybox({
+              content: $('.popup-' + popup, article).html()
+            });
+            return false;
+          });
 
-      ids.forEach(function(value, index){
-        $('#add_story_' + value).bind('click', function(){
-          $('#' + this.id).fancybox();
+          // $(this).draggable({ revert: 'invalid' });
         });
-        $('#create_story_' + value).bind('click', function(){
-          $('#' + this.id).fancybox();
-        });
-      });
 
+        if (my.originalTopic !== null) {
+          $('header.topic-header h1').text(my.originalTopic + ' › ' + $element.text());
+        }
+        else {
+          $('header.topic-header h1').text($element.text());
+        }
+      });
     });
   }
 
@@ -129,14 +141,21 @@ $(function() {
     return false;
   });
 
+  $('article').bind('click', function() {
+    $(this).fancybox();
+    return false;
+  });
+
+  // Store original topic for reference.
   if ($('body').is('.view-story')) {
     SF.originalTopic = $('header.topic-header h1').text();
   }
 
+  /**
+   * Filters.
+   */
   $('.filters .keywords-element ul').tagit();
-
   $('.filters .language-element, .filters .gender-element').chosen();
-
   $('.filters .age-element').slider({
 		range: true,
 		values: [0, 99],
@@ -153,7 +172,6 @@ $(function() {
 			$('.filters .age-value').text(value);
 		}
 	});
-
   $('.filters .time-of-day-element').slider({
 		range: true,
 		values: [0, 24],
@@ -166,7 +184,6 @@ $(function() {
 			$('.filters .time-of-day-value').text(ui.values[0] + ':00 - ' + ui.values[1] + ':00');
 		}
 	});
-
   $('.filters .proximity-element').slider({
 		range: 'min',
 		value: 10000, // Hundreds of meters
@@ -176,7 +193,6 @@ $(function() {
 			$('.filters .proximity-value').text((ui.value / 10) + ' km');
 		}
 	});
-
   $('.filters .ui-slider, .filters .chzn-results li, .filters .keywords-button').bind('mouseup', function() {
     var that = this;
 
