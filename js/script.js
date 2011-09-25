@@ -119,6 +119,7 @@ var SF = (function ($, _) {
         else {
           $('header.topic-header h1').text($element.text());
         }
+
       });
     });
   }
