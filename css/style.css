@@ -256,3 +256,12 @@ header.story-header {
 .dropzone {
   display: none;
 }
+
+
+/**
+ * Popups.
+ */
+
+.popup {
+  display: none;
+}
